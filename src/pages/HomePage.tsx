@@ -2,10 +2,13 @@ import People from "../../public/mainPeopleIcon.png";
 import { FaUser, FaBox } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 
+
+// open state dialog
+// useState dialog
+
 function HomePage() {
   return (
-    <div className="flex justify-center h-screen bg-gray-200">
-      <div className="w-full max-w-xl text-center bg-white">
+      <div className="w-full max-w-5xl text-center bg-white">
         <div className="h-[0.1px] bg-gray-200 mt-4 w-screen"></div>
         <div className="pt-4 sm:pt-6 md:pt-8 lg:pt-12 xl:pt-16 text-blue-950 font-bold">
           Профиль
@@ -24,7 +27,7 @@ function HomePage() {
         </div>
         <div className="border border-gray-200 rounded-lg p-4 shadow-sm flex m-2 mt-12 ">
           <FaUser className="mr-2 mt-auto text-blue-500" size={20} />
-          <button className="w-full h-full flex justify-between items-center  bg-white rounded-lg">
+          <button className="w-full h-full flex justify-between items-center bg-white rounded-lg">
             <span>Данные профиля</span>
             <IoIosArrowForward className="mt-1" size={15} />
           </button>
@@ -37,7 +40,6 @@ function HomePage() {
           </button>
         </div>
       </div>
-    </div>
   );
 }
 
