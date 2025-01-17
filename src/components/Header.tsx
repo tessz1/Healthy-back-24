@@ -17,37 +17,34 @@ function Header() {
   return (
     <div className="relative w-full z-50">
       {/* Верхняя панель */}
-      <div className="fixed top-0 left-0 w-full bg-[#f2f6ff] z-20">
+      <div className="fixed top-0 left-0 w-full bg-[#121212] z-20 shadow-lg">
         <div className="max-w-screen-xl mx-auto flex justify-between items-center p-4">
           {/* Левая часть */}
           <div className="flex items-center space-x-6">
             <Link to="/profile">
-              <MdPeopleAlt size={40} />
+              <MdPeopleAlt size={40} className="text-white" />
             </Link>
             <Link to="/orders">
-              <MdPeopleAlt className="border rounded-2xl p-1" size={30} />
+              <MdPeopleAlt className="border border-[#ff8c00] rounded-2xl p-1 text-white" size={30} />
             </Link>
           </div>
 
           {/* Центральная часть */}
           <div className="flex items-center space-x-2">
-            <span className="text-gray-800 text-lg font-medium">Профиль</span>
-            <IoIosArrowForward size={15} />
+            <span className="text-white text-lg font-medium cursor-pointer">Профиль</span>
+            <IoIosArrowForward size={15} className="text-[#ff8c00]" />
           </div>
 
           {/* Правая часть */}
           <div className="flex items-center space-x-4">
             <Link to="/shopping">
-              <MdOutlineShoppingBag
-                className="rounded-2xl border p-1 bg-white"
-                size={35}
-              />
+              <MdOutlineShoppingBag className="rounded-2xl border border-[#ff8c00] p-1 text-white" size={35} />
             </Link>
             <div className="cursor-pointer" onClick={toggleMenu}>
               {isMenuOpen ? (
-                <MdClose size={35} className="rounded-2xl border p-2 bg-white" />
+                <MdClose size={35} className="rounded-2xl border border-[#ff8c00] p-2 text-white" />
               ) : (
-                <CiMenuFries size={35} className="rounded-2xl border p-2 bg-white" />
+                <CiMenuFries size={35} className="rounded-2xl border border-[#ff8c00] p-2 text-white" />
               )}
             </div>
           </div>
@@ -56,7 +53,7 @@ function Header() {
 
       {/* Выезжающее меню */}
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-white text-black p-6 transform transition-transform duration-300 ease-in-out z-10 ${
+        className={`fixed top-0 left-0 w-full h-full bg-[#1e1e1e] text-white p-6 transform transition-transform duration-300 ease-in-out z-10 ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -64,40 +61,40 @@ function Header() {
         <div className="flex justify-end">
           <MdClose
             size={35}
-            className="cursor-pointer rounded-2xl border p-2 bg-gray-200"
+            className="cursor-pointer rounded-2xl border border-[#ff8c00] p-2 text-white"
             onClick={toggleMenu}
           />
         </div>
 
         {/* Содержимое меню */}
         <div className="flex flex-col space-y-4 mt-8">
-          <div className="flex items-center justify-between p-4 border rounded-lg bg-blue-50 shadow">
+          <div className="flex items-center justify-between p-4 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
             <div className="flex items-center space-x-4">
-              <FaHome size={24} className="text-blue-500" />
-              <span className="text-gray-800 font-medium">Главная</span>
+              <FaHome size={24} className="text-[#ff8c00]" />
+              <span className="text-white font-medium">Главная</span>
             </div>
-            <IoIosArrowForward size={20} className="text-gray-400" />
+            <IoIosArrowForward size={20} className="text-[#ff8c00]" />
           </div>
-          <div className="flex items-center justify-between p-4 border rounded-lg bg-indigo-50 shadow">
+          <div className="flex items-center justify-between p-4 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
             <div className="flex items-center space-x-4">
-              <FaStore size={24} className="text-indigo-500" />
-              <span className="text-gray-800 font-medium">О магазине</span>
+              <FaStore size={24} className="text-[#ff8c00]" />
+              <span className="text-white font-medium">О магазине</span>
             </div>
-            <IoIosArrowForward size={20} className="text-gray-400" />
+            <IoIosArrowForward size={20} className="text-[#ff8c00]" />
           </div>
-          <div className="flex items-center justify-between p-4 border rounded-lg bg-[#fefbf3] shadow">
+          <div className="flex items-center justify-between p-4 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
             <div className="flex items-center space-x-4">
-              <TbFolderCheck size={24} className="text-[#ebad10]" />
-              <span className="text-gray-800 font-medium">История заказов</span>
+              <TbFolderCheck size={24} className="text-[#ff8c00]" />
+              <span className="text-white font-medium">История заказов</span>
             </div>
-            <IoIosArrowForward size={20} className="text-gray-400" />
+            <IoIosArrowForward size={20} className="text-[#ff8c00]" />
           </div>
-          <div className="flex items-center justify-between p-4 border rounded-lg bg-[#f5fdf5] shadow">
+          <div className="flex items-center justify-between p-4 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
             <div className="flex items-center space-x-4">
-              <BiSupport size={24} />
-              <span className="text-gray-800 font-medium">Служба поддержки</span>
+              <BiSupport size={24} className="text-[#ff8c00]" />
+              <span className="text-white font-medium">Служба поддержки</span>
             </div>
-            <IoIosArrowForward size={20} className="text-gray-400" />
+            <IoIosArrowForward size={20} className="text-[#ff8c00]" />
           </div>
         </div>
       </div>

@@ -1,15 +1,19 @@
-import HomePage from "./pages/HomePage.tsx";
+import HomePage from "./pages/HomePage.js";
 import Orders from "./pages/Orders.tsx";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Shop from "./pages/ShopPage.tsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import MainLayouts from "./components/Layouts/MainLayouts.jsx"
 function App() {
   return (
+    // <MainLayouts />
     <Router>
       <Routes>
-        <Route path="/profile" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
 export default App;
