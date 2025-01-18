@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { mockProducts } from "../pages/ShopPage"; // Правильный импорт
+import { mockProducts } from "./ShopPage"; // Правильный импорт
 
 const ProductDetails = () => {
   const { id } = useParams();
