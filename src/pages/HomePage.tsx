@@ -1,13 +1,53 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import People from "../../public/mainPeopleIcon.png";
 import { FaUser, FaBox } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
+import { Link } from "react-router-dom";
+
+interface ProfileData {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+}
 
 function HomePage() {
   const [showProfileForm, setShowProfileForm] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileData>({
+    fullName: "",
+    phoneNumber: "",
+    email: "",
+  });
+
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("profileData");
+    if (storedData) {
+      setProfileData(JSON.parse(storedData)); 
+    }
+  }, []);
 
   const handleToggleProfileForm = () => {
     setShowProfileForm(!showProfileForm);
+  };
+
+  const handleSubmitProfile = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const fullName = formData.get("fullName");
+    const phoneNumber = formData.get("phoneNumber");
+    const email = formData.get("email");
+
+    if (fullName && phoneNumber && email) {
+      const newProfileData = {
+        fullName: fullName as string,
+        phoneNumber: phoneNumber as string,
+        email: email as string,
+      };
+
+      setProfileData(newProfileData); 
+      localStorage.setItem("profileData", JSON.stringify(newProfileData)); // Сохраняем данные в localStorage
+    }
+    setShowProfileForm(false);
   };
 
   return (
@@ -25,7 +65,9 @@ function HomePage() {
       </div>
 
       <div className="mt-6">
-        <div className="font-bold text-lg">name</div>
+        <div className="font-bold text-lg">
+          {profileData.fullName || "Name"}
+        </div>{" "}
       </div>
 
       <div className="border border-gray-700 rounded-lg p-4 shadow-md flex m-2 mt-12 bg-[#1E1E1E]">
@@ -46,60 +88,71 @@ function HomePage() {
             : "translate-y-full opacity-0"
         }`}
         style={{
-          bottom: "10%",
+          bottom: "11%",
           maxHeight: "80vh",
           overflowY: "auto",
         }}
       >
-        <div className="text-gray-300 mb-4 text-left">
-          Введите данные профиля:
-        </div>
+        <form onSubmit={handleSubmitProfile}>
+          <div className="text-gray-300 mb-4 text-left">
+            Введите данные профиля:
+          </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-400 text-left">ФИО</label>
-          <input
-            type="text"
-            placeholder="Введите ФИО"
-            className="w-full p-2 mt-2 bg-[#2A2A2A] border border-gray-600 rounded-lg text-gray-200"
-          />
-        </div>
+          <div className="mb-4">
+            <label className="block text-gray-400 text-left">ФИО</label>
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Введите ФИО"
+              className="w-full p-2 mt-2 bg-[#2A2A2A] border border-gray-600 rounded-lg text-gray-200"
+              defaultValue={profileData.fullName} 
+            />
+          </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-400 text-left">Контакты</label>
-          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 mt-2">
-            <div className="flex-1">
-              <label className="block text-gray-400">Номер телефона</label>
-              <input
-                type="tel"
-                placeholder="Введите номер телефона"
-                className="w-full p-2 mt-2 bg-[#2A2A2A] border border-gray-600 rounded-lg text-gray-200"
-              />
-            </div>
+          <div className="mb-4">
+            <label className="block text-gray-400 text-left">Контакты</label>
+            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 mt-2">
+              <div className="flex-1">
+                <label className="block text-gray-400">Номер телефона</label>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  placeholder="Введите номер телефона"
+                  className="w-full p-2 mt-2 bg-[#2A2A2A] border border-gray-600 rounded-lg text-gray-200"
+                  defaultValue={profileData.phoneNumber} 
+                />
+              </div>
 
-            <div className="flex-1">
-              <label className="block text-gray-400">Почта</label>
-              <input
-                type="email"
-                placeholder="Введите почту"
-                className="w-full p-2 mt-2 bg-[#2A2A2A] border border-gray-600 rounded-lg text-gray-200"
-              />
+              <div className="flex-1">
+                <label className="block text-gray-400">Почта</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Введите почту"
+                  className="w-full p-2 mt-2 bg-[#2A2A2A] border border-gray-600 rounded-lg text-gray-200"
+                  defaultValue={profileData.email} 
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="flex justify-end mt-4">
-          <button className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-400 transition-all duration-300">
-            Отправить
-          </button>
-        </div>
+          <div className="flex justify-end mt-4">
+            <button className="px-6 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-400 transition-all duration-300">
+              Отправить
+            </button>
+          </div>
+        </form>
       </div>
-
-      <div className="border border-gray-700 rounded-lg p-4 shadow-md flex m-2 bg-[#1E1E1E]">
-        <FaBox className="mr-2 text-orange-400" size={20} />
-        <button className="w-full flex justify-between items-center text-gray-300">
-          <span>Мои заказы</span>
-          <IoIosArrowForward className="text-orange-400" size={15} />
-        </button>
+      <div>
+        <Link to="/orders">
+          <div className="border border-gray-700 rounded-lg p-4 shadow-md flex m-2 bg-[#1E1E1E]">
+            <FaBox className="mr-2 text-orange-400" size={20} />
+            <button className="w-full flex justify-between items-center text-gray-300">
+              <span>Мои заказы</span>
+              <IoIosArrowForward className="text-orange-400" size={15} />
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
