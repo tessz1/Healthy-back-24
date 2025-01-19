@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import People from "../../public/mainPeopleIcon.png";
+import People from "../../../public/mainPeopleIcon.png";
 import { FaUser, FaBox } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
