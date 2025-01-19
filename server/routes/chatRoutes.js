@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.get("/messages", async (req, res) => {
   try {
-    const messages = await Chat.find({});
+    const messages = await Chat.find({}).sort({ timestamp: 1 });
+
     res.status(200).json(messages);
   } catch (err) {
     res.status(500).json({ message: err.message });
