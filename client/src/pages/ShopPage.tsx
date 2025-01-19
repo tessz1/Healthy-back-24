@@ -1,58 +1,43 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import axios from "axios";
 
 interface Product {
-  id: number;
+  _id: string;
   name: string;
   price: number;
   description: string;
   imageUrl: string;
 }
 
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    name: "Товар 1",
-    price: 1999,
-    description:
-      "Подробное описание товара 1, его особенности и преимущества. Это может быть длинный текст о товаре.",
-    imageUrl: "https://picsum.photos/200/300",
-  },
-  {
-    id: 2,
-    name: "Товар 2",
-    price: 2999,
-    description:
-      "Подробное описание товара 2, его особенности и преимущества. Это может быть длинный текст о товаре.",
-    imageUrl: "https://picsum.photos/200/200",
-  },
-  {
-    id: 3,
-    name: "Товар 3",
-    price: 1599,
-    description:
-      "Подробное описание товара 3, его особенности и преимущества. Это может быть длинный текст о товаре.",
-    imageUrl: "https://picsum.photos/200/300",
-  },
-  {
-    id: 4,
-    name: "Товар 4",
-    price: 2499,
-    description:
-      "Подробное описание товара 4, его особенности и преимущества. Это может быть длинный текст о товаре.",
-    imageUrl: "https://picsum.photos/200/300",
-  },
-];
-
 const ProductCatalog = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setTimeout(() => {
-      setProducts(mockProducts);
-    }, 1000);
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/products");
+        setProducts(response.data);
+      } catch (err) {
+        setError("Ошибка при загрузке данных");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
+
+  if (loading) {
+    return <div className="text-white text-center mt-10">Загрузка...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-10">{error}</div>;
+  }
 
   return (
     <div className="w-full min-h-screen bg-[#121212] px-4 py-8">
@@ -63,7 +48,7 @@ const ProductCatalog = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {products.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="bg-[#1E1E1E] border border-gray-700 rounded-lg shadow-lg p-4 hover:shadow-xl transition-all max-w-xs mx-auto flex flex-col h-full"
           >
             <div className="overflow-hidden h-48 mb-4">
@@ -78,8 +63,7 @@ const ProductCatalog = () => {
             </h3>
             <p className="text-sm text-gray-400 mb-4 line-clamp-3">
               {product.description}
-            </p>{" "}
-            {/* Ограничиваем описание */}
+            </p>
             <p className="text-xl font-bold text-orange-500 mb-4">
               {product.price} ₽
             </p>
@@ -88,7 +72,7 @@ const ProductCatalog = () => {
                 Купить
               </button>
               <Link
-                to={`/product/${product.id}`}
+                to={`/product/${product._id}`}
                 className="bg-gray-700 text-white py-2 px-4 rounded hover:bg-gray-600 transition-all w-1/2 ml-2 text-center"
               >
                 Узнать больше
@@ -102,4 +86,3 @@ const ProductCatalog = () => {
 };
 
 export default ProductCatalog;
-export { mockProducts };
