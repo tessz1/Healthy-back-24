@@ -16,7 +16,7 @@ const EmptyOrders = () => {
           <p className="text-lg font-medium text-gray-300 mb-8">
             Вы еще ничего не заказывали
           </p>
-          <Link to="/catalog">
+          <Link to="/shop">
             <button className="bg-[#ff8c00] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#e07b00] transition">
               Каталог
             </button>

@@ -1,15 +1,11 @@
 /** @type {import('tailwindcss').Config} */
-import daisyui from "daisyui";
-
 export default {
-  content: ["./index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],
+  content: ["./index.html", "./client/src/**/*.{html,js,jsx,ts,tsx}"], // исправлено
   theme: {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-      },
-      fontFamily: {
-        roboto: "Roboto, sans-serif",
+        roboto: ["Roboto", "sans-serif"], // исправлено
       },
     },
   },
