@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FaHome, FaStore } from "react-icons/fa";
 import { TbFolderCheck } from "react-icons/tb";
 import { BiSupport } from "react-icons/bi";
-
+import mainLogo from "../../../assets/mainLogo.png"
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -20,7 +20,7 @@ function Header() {
         <div className="max-w-screen-xl mx-auto flex justify-between items-center p-4">
           <div className="flex items-center space-x-6">
             <Link to="/">
-              <MdPeopleAlt size={35} className="text-white" />
+              <img src={mainLogo} alt="logo" className="text-white w-12 h-12" />
             </Link>
             <Link to="/orders">
               <MdPeopleAlt
