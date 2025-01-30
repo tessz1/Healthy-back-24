@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@telegram-apps/init-data-node": "^1.2.2",
     "@telegram-apps/react-router-integration": "^1.0.1",
     "@telegram-apps/sdk-react": "^2.0.25",
     "autoprefixer": "^10.4.20",

@@ -5,12 +5,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import ProductDetail from "./pages/ProductDetail.tsx";
 import Chat from "./pages/Chat.jsx";
 import UploadCourse from "./pages/UploadCourse.js";
+import StartPages from "./components/StartPages.js";
 // import MainLayouts from "./components/Layouts/MainLayouts.jsx"
 function App() {
   return (
     // <MainLayouts />
     <Router>
       <Routes>
+        <Route path="/start" element={<StartPages />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/shop" element={<Shop />} />
