@@ -4,9 +4,9 @@ import Shop from "./pages/ShopPage.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import ProductDetail from "./pages/ProductDetail.tsx";
 import Chat from "./pages/Chat.jsx";
-import UploadCourse from "./pages/UploadCourse.js";
+import UploadCourse from "./pages/admin/UploadCourse.js";
 import StartPages from "./components/StartPages.js";
-import AdminRouterPage from "./pages/AdminRouterPage.tsx"
+import AdminRouterPage from "./pages/admin/AdminRouterPage.tsx"
 // import MainLayouts from "./components/Layouts/MainLayouts.jsx"
 function App() {
   return (

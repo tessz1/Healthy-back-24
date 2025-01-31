@@ -8,7 +8,7 @@ function StartPages({ onClose }: StartPagesProps) {
   return (
     <div className="w-full max-w-1xl bg-[#121212] text-gray-200 font-roboto min-h-screen flex flex-col items-center px-4 md:px-6 py-6">
       <div className="flex flex-col space-y-3 max-w-2xl">
-        <div>
+        <div className="">
           <img src={mainLogo} alt="mainLogo" />
         </div>
         <div className="text-gray-200 text-base sm:text-lg md:text-xl leading-normal">
