@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: ru,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin", "back_strengthening", "post_surgery_rehabilitation", "posture_correction_office" ], // может пополняться // 
+    },
     isPremium: {
       type: Boolean,
       default: false,

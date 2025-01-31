@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import Header from "../components/Header.tsx"
+import Header from "../../components/Header.tsx"
 declare global {
   interface Window {
     Telegram: any;
