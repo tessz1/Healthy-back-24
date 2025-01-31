@@ -2,17 +2,24 @@ import { MdPeopleAlt, MdOutlineShoppingBag, MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaHome, FaStore } from "react-icons/fa";
 import { TbFolderCheck } from "react-icons/tb";
 import { BiSupport } from "react-icons/bi";
-import mainLogo from "../../../assets/mainLogo.png"
+import mainLogo from "../../../assets/mainLogo.png";
+
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userTelegramId, setUserTelegramId] = useState<string | null>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    
+    setUserTelegramId("123456789"); 
+  }, []);
 
   return (
     <div className="relative w-full z-50">
@@ -116,6 +123,18 @@ function Header() {
               <IoIosArrowForward size={18} className="text-[#ff8c00]" />
             </div>
           </Link>
+
+  
+          {userTelegramId === "123456789" && (
+            <Link to="/admin">
+              <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
+                <div className="flex items-center space-x-4">
+                  <span className="text-[#ff8c00]">Админка</span>
+                </div>
+                <IoIosArrowForward size={18} className="text-[#ff8c00]" />
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </div>

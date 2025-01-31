@@ -8,10 +8,20 @@ declare global {
   }
 }
 
+interface Course {
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+  images: string;
+}
+
 const ProductCatalog = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -25,19 +35,22 @@ const ProductCatalog = () => {
       }
     };
 
-    
-    console.log("Courses data (initial):", courses); 
     fetchCourses();
-
-
-    courses.forEach((course) => {
-      console.log(`Course: ${course.title}, Image URL: ${course.imageUrl}`);
-    });
 
     if (window.Telegram?.WebApp) {
       window.Telegram.WebApp.expand();
     }
-  }, [courses]);
+  }, []);
+
+  const openModal = (course: Course) => {
+    setSelectedCourse(course);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedCourse(null);
+  };
 
   if (loading) {
     return <div className="text-white text-center mt-10">Загрузка...</div>;
@@ -61,10 +74,9 @@ const ProductCatalog = () => {
               className="bg-[#1E1E1E] border border-gray-700 rounded-lg p-4 shadow-lg hover:shadow-xl transition-all flex flex-col h-full"
             >
               <div className="overflow-hidden h-48 mb-4">
-
                 {course.images ? (
                   <img
-                    src={`http://localhost:5000${course.images}`} 
+                    src={`http://localhost:5000${course.images}`}
                     alt={course.title}
                     className="w-full h-full object-cover"
                   />
@@ -84,7 +96,7 @@ const ProductCatalog = () => {
                 {course.price} ₽
               </p>
               <button
-                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400 transition-all w-full"
+                className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400 transition-all w-full mb-2"
                 onClick={() => {
                   if (window.Telegram?.WebApp) {
                     window.Telegram.WebApp.sendData(JSON.stringify(course));
@@ -93,10 +105,38 @@ const ProductCatalog = () => {
               >
                 Добавить
               </button>
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 transition-all w-full"
+                onClick={() => openModal(course)}
+              >
+                Подробнее
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      {isModalOpen && selectedCourse && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-[#1E1E1E] rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-semibold text-gray-200 mb-2">
+              {selectedCourse.title}
+            </h3>
+            <p className="text-sm text-gray-400 mb-4">
+              {selectedCourse.description}
+            </p>
+            <p className="text-xl font-bold text-orange-500 mb-4">
+              {selectedCourse.price} ₽
+            </p>
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 transition-all w-full"
+              onClick={closeModal}
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
