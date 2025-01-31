@@ -14,9 +14,7 @@ interface ProfileData {
 }
 
 function HomePage() {
-  const [showStartPages, setShowStartPages] = useState(() => {
-    return localStorage.getItem("firstVisit") !== "false";
-  });
+  const [showStartPages, setShowStartPages] = useState(true);
 
   const [profileData, setProfileData] = useState<ProfileData>({
     fullName: "Гость",
@@ -24,24 +22,31 @@ function HomePage() {
     email: "",
   });
 
+  const [isProfileModalVisible, setProfileModalVisible] = useState(false);
+  const [animationState, setAnimationState] = useState<
+    "entering" | "exiting" | "idle"
+  >("idle");
+
   useEffect(() => {
-    if (tg) {
-      tg.expand();
-      const user = tg.initDataUnsafe.user;
-      if (user) {
-        setProfileData({
-          fullName:
-            user.first_name + (user.last_name ? " " + user.last_name : ""),
-          phoneNumber: "",
-          email: "",
-        });
-      }
+    if (isProfileModalVisible) {
+      setAnimationState("entering");
     }
-  }, []);
+  }, [isProfileModalVisible]);
+
+  const toggleProfileModal = () => {
+    if (isProfileModalVisible) {
+      setAnimationState("exiting");
+      setTimeout(() => {
+        setProfileModalVisible(false);
+        setAnimationState("idle");
+      }, 500);
+    } else {
+      setProfileModalVisible(true);
+    }
+  };
 
   const handleCloseStartPage = () => {
     setShowStartPages(false);
-    localStorage.setItem("firstVisit", "false");
   };
 
   if (showStartPages) {
@@ -68,7 +73,10 @@ function HomePage() {
 
         <div className="border border-gray-700 rounded-lg p-4 shadow-md flex m-2 mt-12 bg-[#1E1E1E]">
           <FaUser className="mr-2 text-orange-400" size={20} />
-          <button className="w-full flex justify-between items-center text-gray-300">
+          <button
+            className="w-full flex justify-between items-center text-gray-300"
+            onClick={toggleProfileModal}
+          >
             <span>Данные профиля</span>
             <IoIosArrowForward className="text-orange-400" size={15} />
           </button>
@@ -86,6 +94,41 @@ function HomePage() {
           </Link>
         </div>
       </div>
+
+      {isProfileModalVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50">
+          <div
+            className={`bg-[#1E1E1E] p-6 rounded-lg max-w-lg w-full transform transition-all duration-500 ease-out ${
+              animationState === "entering"
+                ? "translate-y-0"
+                : animationState === "exiting"
+                ? "translate-y-full"
+                : "translate-y-full"
+            }`}
+          >
+            <h2 className="text-lg text-orange-400 font-semibold">
+              Данные профиля
+            </h2>
+            <div className="mt-4">
+              <p>
+                <b>Имя:</b> {profileData.fullName}
+              </p>
+              <p>
+                <b>Телефон:</b> {profileData.phoneNumber || "Не указано"}
+              </p>
+              <p>
+                <b>Email:</b> {profileData.email || "Не указано"}
+              </p>
+            </div>
+            <button
+              className="mt-4 bg-red-600 text-white py-2 px-4 rounded-lg"
+              onClick={toggleProfileModal}
+            >
+              Закрыть
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

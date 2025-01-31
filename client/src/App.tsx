@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Chat from "./pages/Chat.jsx";
 import UploadCourse from "./pages/UploadCourse.js";
 import StartPages from "./components/StartPages.js";
+import AdminRouterPage from "./pages/AdminRouterPage.tsx"
 // import MainLayouts from "./components/Layouts/MainLayouts.jsx"
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/adminTest" element={<UploadCourse />} />
+        <Route path="/adminRouterPage" element={<AdminRouterPage />} />
         {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
       </Routes>
     </Router>
