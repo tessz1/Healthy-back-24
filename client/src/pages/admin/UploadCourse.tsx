@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import Header from "../../components/Header.tsx"
+
 declare global {
   interface Window {
     Telegram: any;
@@ -16,7 +16,9 @@ const UploadCourse = () => {
   const [images, setImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [messageType, setMessageType] = useState<"success" | "error" | null>(null); 
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(
+    null
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -27,7 +29,7 @@ const UploadCourse = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage(null); 
+    setMessage(null);
 
     const formData = new FormData();
     formData.append("title", title);
@@ -39,9 +41,13 @@ const UploadCourse = () => {
     images.forEach((image) => formData.append("images", image));
 
     try {
-      const response = await axios.post("http://localhost:5000/api/courses", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/courses",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       setMessage("Курс успешно загружен!");
       setMessageType("success");
       console.log("Курс успешно загружен:", response.data);
@@ -56,8 +62,9 @@ const UploadCourse = () => {
 
   return (
     <div className="w-full min-h-screen bg-[#121212] px-4 py-8">
-      <Header />
-      <h2 className="text-2xl font-bold text-center text-gray-200 mb-8 mt-12">Добавить курс</h2>
+      <h2 className="text-2xl font-bold text-center text-gray-200 mb-8 mt-12">
+        Добавить курс
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <input
@@ -130,7 +137,9 @@ const UploadCourse = () => {
       {message && (
         <div
           className={`mt-6 p-4 rounded-md text-center ${
-            messageType === "success" ? "bg-green-500 text-white" : "bg-red-500 text-white"
+            messageType === "success"
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"
           }`}
         >
           {message}

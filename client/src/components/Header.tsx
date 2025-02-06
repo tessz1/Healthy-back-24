@@ -11,15 +11,40 @@ import mainLogo from "../../../assets/mainLogo.png";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userTelegramId, setUserTelegramId] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const tg = window.Telegram?.WebApp;
+  const userData = tg?.initDataUnsafe?.user;
+
+
+  useEffect(() => {
+    if (userData?.id) {
+      setUserTelegramId(userData.id.toString());
+    }
+  }, [userData]);
+
+
+  useEffect(() => {
+    const checkUserRole = async () => {
+      if (userTelegramId) {
+        try {
+          const response = await fetch(`/api/users/${userTelegramId}`);
+          const user = await response.json();
+          if (user.role === "admin") {
+            setIsAdmin(true);
+          }
+        } catch (error) {
+          console.error("Ошибка при проверке роли пользователя:", error);
+        }
+      }
+    };
+
+    checkUserRole();
+  }, [userTelegramId]);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
-
-  useEffect(() => {
-    
-    setUserTelegramId("123456789"); 
-  }, []);
 
   return (
     <div className="relative w-full z-50">
@@ -124,8 +149,7 @@ function Header() {
             </div>
           </Link>
 
-  
-          {userTelegramId === "123456789" && (
+          {isAdmin && (
             <Link to="/admin">
               <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
                 <div className="flex items-center space-x-4">

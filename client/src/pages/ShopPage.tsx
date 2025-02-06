@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Header from "../components/Header";
+
 
 declare global {
   interface Window {
@@ -62,9 +62,8 @@ const ProductCatalog = () => {
 
   return (
     <div>
-      <Header />
       <div className="w-full min-h-screen bg-[#121212] px-4 py-8">
-        <h2 className="text-2xl font-bold text-center text-gray-200 mb-8 mt-12">
+        <h2 className="text-2xl font-bold text-center text-gray-200 mb-8 mt-16  ">
           Курсы
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
