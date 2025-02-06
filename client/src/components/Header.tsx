@@ -1,4 +1,4 @@
-import { MdPeopleAlt, MdOutlineShoppingBag, MdClose } from "react-icons/md";
+import { MdPeopleAlt, MdOutlineShoppingBag, MdClose, MdReviews } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
@@ -109,7 +109,7 @@ function Header() {
         </div>
 
         <div className="flex flex-col space-y-4 mt-8">
-          <Link to="/">
+          <Link to="/" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <FaHome size={22} className="text-[#ff8c00]" />
@@ -119,7 +119,7 @@ function Header() {
             </div>
           </Link>
 
-          <Link to="/store">
+          <Link to="/store" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <FaStore size={22} className="text-[#ff8c00]" />
@@ -129,7 +129,7 @@ function Header() {
             </div>
           </Link>
 
-          <Link to="/orders">
+          <Link to="/orders" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <TbFolderCheck size={22} className="text-[#ff8c00]" />
@@ -139,7 +139,7 @@ function Header() {
             </div>
           </Link>
 
-          <Link to="/chat">
+          <Link to="/chat" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <BiSupport size={22} className="text-[#ff8c00]" />
@@ -148,9 +148,18 @@ function Header() {
               <IoIosArrowForward size={18} className="text-[#ff8c00]" />
             </div>
           </Link>
+          <Link to="/reviews" onClick={toggleMenu}>
+            <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
+              <div className="flex items-center space-x-4">
+                <MdReviews size={22} className="text-[#ff8c00]" />
+                <span className="text-white font-medium">Отзывы</span>
+              </div>
+              <IoIosArrowForward size={18} className="text-[#ff8c00]" />
+            </div>
+          </Link>
 
           {isAdmin && (
-            <Link to="/admin">
+            <Link to="/admin" onClick={toggleMenu}>
               <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
                 <div className="flex items-center space-x-4">
                   <span className="text-[#ff8c00]">Админка</span>

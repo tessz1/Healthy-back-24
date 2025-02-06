@@ -25,7 +25,7 @@ function Reviews() {
         </div>
         <div className="text-center">
           <Link to="/shop">
-            <button className="bg-[#ff8c00] text-white font-bold hover:text-black duration-150   rounded-2xl p-4">
+            <button className="bg-[#ff8c00] text-white font-bold hover:bg-green-600 duration-150   rounded-2xl p-4">
               Хочу здоровую спину!
             </button>
           </Link>
