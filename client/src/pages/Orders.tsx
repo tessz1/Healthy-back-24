@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const EmptyOrders = () => {
   return (
-    <div className="font-sans bg-[#121212] min-h-screen text-white">
+    <div className="font-roboto bg-[#121212] min-h-screen text-white">
       <div className="flex justify-center items-center h-screen">
         <div className="bg-[#1e1e1e] p-6 rounded-2xl shadow-lg text-center w-80 border border-[#ff8c00]">
           <div className="flex justify-center items-center mb-4">

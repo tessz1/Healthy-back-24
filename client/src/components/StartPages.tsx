@@ -11,11 +11,14 @@ function StartPages({ onClose }: StartPagesProps) {
         <div className="flex flex-col">
           <img src={mainLogo} alt="mainLogo" />
         </div>
-        <div className="text-gray-200 text-base sm:text-lg md:text-xl leading-normal">
+        <div className="p-4">
+          <div className="h-px bg-gray-300"></div>
+        </div>
+        <div className="text-gray-200 text-base sm:text-lg md:text-xl text-center">
           Здоровая спина — основа здоровья, красоты и молодости. Это жизнь без
           боли и ограничений.
         </div>
-        <div className="text-gray-200 text-base sm:text-lg md:text-xl leading-normal">
+        <div className="text-gray-200 text-base sm:text-lg md:text-xl leading-normal text-center">
           Реабилитация после операции, коррекция осанки и программы для офисных
           сотрудников. Это не просто тренировки — это новый образ жизни.
         </div>
