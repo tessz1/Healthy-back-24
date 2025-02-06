@@ -15,17 +15,26 @@ interface ProfileData {
 
 function HomePage() {
   const [showStartPages, setShowStartPages] = useState(true);
-
   const [profileData, setProfileData] = useState<ProfileData>({
     fullName: "Гость",
     phoneNumber: "",
     email: "",
   });
-
   const [isProfileModalVisible, setProfileModalVisible] = useState(false);
   const [animationState, setAnimationState] = useState<
     "entering" | "exiting" | "idle"
   >("idle");
+
+  const userData = tg?.initDataUnsafe?.user;
+  const userPhoto = userData?.photo_url || People;
+  useEffect(() => {
+    if (userData) {
+      setProfileData((prev) => ({
+        ...prev,
+        fullName: userData.first_name || "Гость",
+      }));
+    }
+  }, [userData]);
 
   useEffect(() => {
     if (isProfileModalVisible) {
@@ -61,9 +70,9 @@ function HomePage() {
 
         <div className="flex items-center justify-center mt-12">
           <img
-            src={People}
+            src={userPhoto} 
             alt="people"
-            className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border-2 border-orange-400 shadow-lg"
+            className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border-2 border-orange-400 shadow-lg object-cover"
           />
         </div>
 

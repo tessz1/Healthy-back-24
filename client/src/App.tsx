@@ -6,12 +6,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Chat from "./pages/Chat.jsx";
 import UploadCourse from "./pages/admin/UploadCourse.js";
 import StartPages from "./components/StartPages.js";
-import AdminRouterPage from "./pages/admin/AdminRouterPage.tsx"
-// import MainLayouts from "./components/Layouts/MainLayouts.jsx"
+import AdminRouterPage from "./pages/admin/AdminRouterPage.tsx";
+import Basket from "./pages/Basket.tsx";
+import Header from "./components/Header.tsx";
+import Reviews from "./pages/Reviews";
+
 function App() {
   return (
-    // <MainLayouts />
     <Router>
+      <Header />
       <Routes>
         <Route path="/start" element={<StartPages />} />
         <Route path="/" element={<HomePage />} />
@@ -20,7 +23,8 @@ function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/adminTest" element={<UploadCourse />} />
         <Route path="/adminRouterPage" element={<AdminRouterPage />} />
-        {/* <Route path="/product/:id" element={<ProductDetail />} /> */}
+        <Route path="/basket" element={<Basket />} />
+        <Route path="reviews" element={<Reviews />} />
       </Routes>
     </Router>
   );
