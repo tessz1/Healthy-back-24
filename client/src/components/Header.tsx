@@ -1,4 +1,9 @@
-import { MdPeopleAlt, MdOutlineShoppingBag, MdClose, MdReviews } from "react-icons/md";
+import {
+  MdPeopleAlt,
+  MdOutlineShoppingBag,
+  MdClose,
+  MdReviews,
+} from "react-icons/md";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
@@ -7,6 +12,7 @@ import { FaHome, FaStore } from "react-icons/fa";
 import { TbFolderCheck } from "react-icons/tb";
 import { BiSupport } from "react-icons/bi";
 import mainLogo from "../../../assets/mainLogo.png";
+import { FaBasketShopping } from "react-icons/fa6";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,13 +22,11 @@ function Header() {
   const tg = window.Telegram?.WebApp;
   const userData = tg?.initDataUnsafe?.user;
 
-
   useEffect(() => {
     if (userData?.id) {
       setUserTelegramId(userData.id.toString());
     }
   }, [userData]);
-
 
   useEffect(() => {
     const checkUserRole = async () => {
@@ -153,6 +157,15 @@ function Header() {
               <div className="flex items-center space-x-4">
                 <MdReviews size={22} className="text-[#ff8c00]" />
                 <span className="text-white font-medium">Отзывы</span>
+              </div>
+              <IoIosArrowForward size={18} className="text-[#ff8c00]" />
+            </div>
+          </Link>
+          <Link to="/cart" onClick={toggleMenu}>
+            <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
+              <div className="flex items-center space-x-4">
+                <FaBasketShopping size={22} className="text-[#ff8c00]" />
+                <span className="text-white font-medium">Корзина</span>
               </div>
               <IoIosArrowForward size={18} className="text-[#ff8c00]" />
             </div>
