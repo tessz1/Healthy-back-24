@@ -24,7 +24,6 @@ const initialState: CoursesState = {
   error: null,
 };
 
-// Асинхронное получение курсов с сервера
 export const fetchCourses = createAsyncThunk<Course[]>(
   "courses/fetchCourses",
   async (_, { rejectWithValue }) => {

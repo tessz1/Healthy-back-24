@@ -6,25 +6,20 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
 
 const upload = multer({ storage });
 
-
-router.post("/", upload.array("images", 5), async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   try {
     const { title, description, price, duration, instructor } = req.body;
-    if (!title || !description || !price || !duration || !instructor) {
-      return res.status(400).json({ message: "Все поля обязательны" });
-    }
 
-    const courseImages = req.files.map(file => `/uploads/${file.filename}`);
-
+    const courseImage = req.file ? `/uploads/${req.file.filename}` : null;
 
     const newCourse = new Course({
       title,
@@ -32,17 +27,16 @@ router.post("/", upload.array("images", 5), async (req, res) => {
       price,
       duration,
       instructor,
-      imageUrls: courseImages,
+      images: courseImage, 
     });
 
     await newCourse.save();
     res.status(201).json(newCourse);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
-// Получение всех курсов
 router.get("/", async (req, res) => {
   try {
     const courses = await Course.find({});
@@ -52,7 +46,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Получение одного курса по ID
+
 router.get("/:id", async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -63,7 +57,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Обновление курса
 router.put("/:id", async (req, res) => {
   try {
     const updateCourse = await Course.findByIdAndUpdate(
@@ -79,7 +72,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// Удаление курса
+
 router.delete("/:id", async (req, res) => {
   try {
     const course = await Course.findByIdAndDelete(req.params.id);
@@ -90,7 +83,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Раздача загруженных файлов
+
 router.use("/uploads", express.static("uploads"));
 
 export default router;

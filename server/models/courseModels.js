@@ -7,7 +7,7 @@ const CourseSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     duration: { type: String, required: true },
     instructor: { type: String, required: true },
-    images: [{ type: String }] 
+    images: { type: String, required: true },
   },
   { timestamps: true }
 );

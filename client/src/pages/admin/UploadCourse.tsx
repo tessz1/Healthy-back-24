@@ -38,7 +38,9 @@ const UploadCourse = () => {
     formData.append("duration", duration);
     formData.append("instructor", instructor);
 
-    images.forEach((image) => formData.append("images", image));
+    if (images.length > 0) {
+      formData.append("image", images[0]); // Сохраняем только ОДИН файл
+    }
 
     try {
       const response = await axios.post(
