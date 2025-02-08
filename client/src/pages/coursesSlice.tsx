@@ -40,7 +40,7 @@ export const fetchCourses = createAsyncThunk<Course[]>(
   }
 );
 
-// Создание slice
+
 const coursesSlice = createSlice({
   name: "courses",
   initialState,
