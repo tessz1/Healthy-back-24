@@ -1,10 +1,18 @@
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/index";
-import { removeItem, updateQuantity } from "../store/cartSlice";
+import { removeItem, updateQuantity, clearCart } from "../store/cartSlice";
+import { useEffect } from "react";
 
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+    }
+  }, []);
 
   const handleRemove = (id: string) => {
     dispatch(removeItem(id));
@@ -13,6 +21,44 @@ const CartPage = () => {
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity >= 1) {
       dispatch(updateQuantity({ id, quantity: newQuantity }));
+    }
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const userData = window.Telegram.WebApp.initDataUnsafe.user;
+
+      const response = await fetch("http://localhost:5000/create-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userData.id,
+          items: cartItems,
+          totalAmount: cartItems.reduce(
+            (sum, item) => sum + item.price * item.quantity,
+            0
+          ),
+        }),
+      });
+
+      const { paymentUrl } = await response.json();
+
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openInvoice(paymentUrl, (status: string) => {
+          if (status === "paid") {
+            alert("Оплата прошла успешно!");
+            dispatch(clearCart());
+          } else {
+            alert("Оплата не прошла.");
+          }
+        });
+      } else {
+        window.location.href = paymentUrl;
+      }
+    } catch (error) {
+      console.error("Ошибка при создании платежа:", error);
     }
   };
 
@@ -32,11 +78,17 @@ const CartPage = () => {
               className="flex flex-col sm:flex-row items-center bg-[#1E1E1E] border border-gray-700 rounded-lg p-4 shadow-lg w-full"
             >
               <div className="w-full sm:w-24 h-24 overflow-hidden rounded-md mb-4 sm:mb-0">
-                <img
-                  src={`http://localhost:5000${item.images}`}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
+                {item.images ? (
+                  <img
+                    src={`http://localhost:5000${item.images}`}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                    <span className="text-gray-400">Нет изображения</span>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col sm:ml-4 flex-grow">
@@ -47,7 +99,7 @@ const CartPage = () => {
                   {item.description}
                 </p>
                 <p className="text-xl font-bold text-orange-500">
-                  {item.price} ₽
+                  {new Intl.NumberFormat("ru-RU").format(item.price)} ₽
                 </p>
               </div>
 
@@ -79,6 +131,15 @@ const CartPage = () => {
               </button>
             </div>
           ))}
+
+          <div className="flex justify-end mt-8">
+            <button
+              onClick={handleCheckout}
+              className="bg-green-600 text-white px-6 py-2 rounded-lg text-lg hover:bg-green-500"
+            >
+              Оплатить
+            </button>
+          </div>
         </div>
       )}
     </div>

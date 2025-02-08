@@ -123,11 +123,11 @@ function Header() {
             </div>
           </Link>
 
-          <Link to="/store" onClick={toggleMenu}>
+          <Link to="/shop" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <FaStore size={22} className="text-[#ff8c00]" />
-                <span className="text-white font-medium">О магазине</span>
+                <span className="text-white font-medium">Магазине</span>
               </div>
               <IoIosArrowForward size={18} className="text-[#ff8c00]" />
             </div>
