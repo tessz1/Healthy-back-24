@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "../store/cartSlice";
 import axios from "axios";
-import Header from "../components/Header";
 
 declare global {
   interface Window {
@@ -22,6 +23,8 @@ const ProductCatalog = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -52,6 +55,23 @@ const ProductCatalog = () => {
     setSelectedCourse(null);
   };
 
+  const handleAddToCart = (course: Course) => {
+    dispatch(
+      addItem({
+        id: course._id,
+        title: course.title,
+        description: course.description,
+        price: course.price,
+        images: course.images,
+        quantity: 1,
+      })
+    );
+
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.sendData(JSON.stringify(course));
+    }
+  };
+
   if (loading) {
     return <div className="text-white text-center mt-10">Загрузка...</div>;
   }
@@ -62,9 +82,8 @@ const ProductCatalog = () => {
 
   return (
     <div>
-      <Header />
       <div className="w-full min-h-screen bg-[#121212] px-4 py-8">
-        <h2 className="text-2xl font-bold text-center text-gray-200 mb-8 mt-12">
+        <h2 className="text-2xl font-bold text-center text-gray-200 mb-8 mt-16">
           Курсы
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -97,13 +116,9 @@ const ProductCatalog = () => {
               </p>
               <button
                 className="bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-400 transition-all w-full mb-2"
-                onClick={() => {
-                  if (window.Telegram?.WebApp) {
-                    window.Telegram.WebApp.sendData(JSON.stringify(course));
-                  }
-                }}
+                onClick={() => handleAddToCart(course)}
               >
-                Добавить
+                Добавить в корзину
               </button>
               <button
                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-400 transition-all w-full"

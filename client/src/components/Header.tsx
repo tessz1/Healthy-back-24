@@ -1,4 +1,9 @@
-import { MdPeopleAlt, MdOutlineShoppingBag, MdClose } from "react-icons/md";
+import {
+  MdPeopleAlt,
+  MdOutlineShoppingBag,
+  MdClose,
+  MdReviews,
+} from "react-icons/md";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { CiMenuFries } from "react-icons/ci";
@@ -7,19 +12,43 @@ import { FaHome, FaStore } from "react-icons/fa";
 import { TbFolderCheck } from "react-icons/tb";
 import { BiSupport } from "react-icons/bi";
 import mainLogo from "../../../assets/mainLogo.png";
+import { FaBasketShopping } from "react-icons/fa6";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userTelegramId, setUserTelegramId] = useState<string | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const tg = window.Telegram?.WebApp;
+  const userData = tg?.initDataUnsafe?.user;
+
+  useEffect(() => {
+    if (userData?.id) {
+      setUserTelegramId(userData.id.toString());
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    const checkUserRole = async () => {
+      if (userTelegramId) {
+        try {
+          const response = await fetch(`/api/users/${userTelegramId}`);
+          const user = await response.json();
+          if (user.role === "admin") {
+            setIsAdmin(true);
+          }
+        } catch (error) {
+          console.error("Ошибка при проверке роли пользователя:", error);
+        }
+      }
+    };
+
+    checkUserRole();
+  }, [userTelegramId]);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
-
-  useEffect(() => {
-    
-    setUserTelegramId("123456789"); 
-  }, []);
 
   return (
     <div className="relative w-full z-50">
@@ -84,7 +113,7 @@ function Header() {
         </div>
 
         <div className="flex flex-col space-y-4 mt-8">
-          <Link to="/">
+          <Link to="/" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <FaHome size={22} className="text-[#ff8c00]" />
@@ -94,17 +123,17 @@ function Header() {
             </div>
           </Link>
 
-          <Link to="/store">
+          <Link to="/shop" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <FaStore size={22} className="text-[#ff8c00]" />
-                <span className="text-white font-medium">О магазине</span>
+                <span className="text-white font-medium">Магазине</span>
               </div>
               <IoIosArrowForward size={18} className="text-[#ff8c00]" />
             </div>
           </Link>
 
-          <Link to="/orders">
+          <Link to="/orders" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <TbFolderCheck size={22} className="text-[#ff8c00]" />
@@ -114,7 +143,7 @@ function Header() {
             </div>
           </Link>
 
-          <Link to="/chat">
+          <Link to="/chat" onClick={toggleMenu}>
             <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
               <div className="flex items-center space-x-4">
                 <BiSupport size={22} className="text-[#ff8c00]" />
@@ -123,10 +152,27 @@ function Header() {
               <IoIosArrowForward size={18} className="text-[#ff8c00]" />
             </div>
           </Link>
+          <Link to="/reviews" onClick={toggleMenu}>
+            <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
+              <div className="flex items-center space-x-4">
+                <MdReviews size={22} className="text-[#ff8c00]" />
+                <span className="text-white font-medium">Отзывы</span>
+              </div>
+              <IoIosArrowForward size={18} className="text-[#ff8c00]" />
+            </div>
+          </Link>
+          <Link to="/cart" onClick={toggleMenu}>
+            <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
+              <div className="flex items-center space-x-4">
+                <FaBasketShopping size={22} className="text-[#ff8c00]" />
+                <span className="text-white font-medium">Корзина</span>
+              </div>
+              <IoIosArrowForward size={18} className="text-[#ff8c00]" />
+            </div>
+          </Link>
 
-  
-          {userTelegramId === "123456789" && (
-            <Link to="/admin">
+          {isAdmin && (
+            <Link to="/admin" onClick={toggleMenu}>
               <div className="flex items-center justify-between p-3 border border-[#ff8c00] rounded-lg bg-[#2a2a2a] shadow hover:bg-[#ff8c00] transition">
                 <div className="flex items-center space-x-4">
                   <span className="text-[#ff8c00]">Админка</span>

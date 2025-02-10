@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
-import Header from '../components/Header'
+
 const Chat = () => {
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Привет! Как я могу помочь?" }
@@ -21,7 +21,6 @@ const Chat = () => {
 
   return (
     <div className="w-full h-screen bg-[#121212] flex flex-col">
-      <Header/>
       <div className="flex-1 overflow-y-auto p-4 text-gray-200 pt-20">
         {messages.map((msg, index) => (
           <div

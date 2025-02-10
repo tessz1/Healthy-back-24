@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     languageCode: {
       type: String,
-      default: ru,
+      default: "ru",
     },
     role: {
       type: String,
