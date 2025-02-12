@@ -11,6 +11,7 @@ import Basket from "./pages/Basket.tsx";
 import Header from "./components/Header.tsx";
 import Reviews from "./pages/Reviews";
 import Cart from "./pages/Cart.tsx";
+import NavigationAdmin from "./pages/admin/NavigationAdmin.tsx";
 function App() {
   return (
     <Router>
@@ -21,11 +22,12 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/shop" element={<Shop />} />
         {/* <Route path="/chat" element={<Chat />} /> */}
-        <Route path="/adminTest" element={<UploadCourse />} />
+        <Route path="/uploadCourse" element={<UploadCourse />} />
         <Route path="/adminRouterPage" element={<AdminRouterPage />} />
         <Route path="/basket" element={<Basket />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="/admin" element={<NavigationAdmin/>} />
       </Routes>
     </Router>
   );

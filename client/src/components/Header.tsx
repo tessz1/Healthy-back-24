@@ -17,7 +17,7 @@ import { FaBasketShopping } from "react-icons/fa6";
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userTelegramId, setUserTelegramId] = useState<string | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
 
   const tg = window.Telegram?.WebApp;
   const userData = tg?.initDataUnsafe?.user;

@@ -1,14 +1,17 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import viteBabel from 'vite-plugin-babel';
+import babel from 'vite-plugin-babel';
 
 export default defineConfig({
   plugins: [
     react(),
-    viteBabel({
+    babel({
       babelConfig: {
-        plugins: ['@babel/plugin-proposal-decorators'],
-      },
-    }),
-  ],
+        plugins: [
+          ["@babel/plugin-proposal-decorators", { "legacy": true }],
+          ["@babel/plugin-proposal-class-properties", { "loose": true }]
+        ]
+      }
+    })
+  ]
 });
