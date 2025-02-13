@@ -12,6 +12,7 @@ import Header from "./components/Header.tsx";
 import Reviews from "./pages/Reviews";
 import Cart from "./pages/Cart.tsx";
 import NavigationAdmin from "./pages/admin/NavigationAdmin.tsx";
+import CreatePromoCode from "./pages/admin/CreatePromocode.tsx"
 function App() {
   return (
     <Router>
@@ -28,6 +29,7 @@ function App() {
         <Route path="reviews" element={<Reviews />} />
         <Route path="cart" element={<Cart />} />
         <Route path="/admin" element={<NavigationAdmin/>} />
+        <Route path="/createPromoCode" element={<CreatePromoCode />} />
       </Routes>
     </Router>
   );
