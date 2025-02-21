@@ -1,29 +1,75 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/index";
 import { removeItem, updateQuantity, clearCart } from "../store/cartSlice";
-import { useEffect } from "react";
 
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
 
+
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(
+    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  );
+
+  
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
     }
   }, []);
 
+  // Обновление итоговой суммы при изменении количества товаров или скидки
+  useEffect(() => {
+    const newTotalAmount = cartItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    setTotalAmount(newTotalAmount - discount);
+  }, [cartItems, discount]);
+
   const handleRemove = (id: string) => {
     dispatch(removeItem(id));
   };
 
+  // Изменение количества товара
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity >= 1) {
       dispatch(updateQuantity({ id, quantity: newQuantity }));
     }
   };
 
+  const handleApplyPromoCode = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/promo/apply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: promoCode,
+          orderTotal: totalAmount + discount, // Итоговая сумма до применения скидки
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setDiscount(data.discount); 
+        setTotalAmount(data.finalTotal); 
+        alert("Промокод успешно применен!");
+      } else {
+        alert(data.message || "Не удалось применить промокод");
+      }
+    } catch (error) {
+      console.error("Ошибка при применении промокода:", error);
+      alert("Ошибка при применении промокода");
+    }
+  };
+
+  // Оформление заказа
   const handleCheckout = async () => {
     try {
       const userData = window.Telegram.WebApp.initDataUnsafe.user;
@@ -36,10 +82,7 @@ const CartPage = () => {
         body: JSON.stringify({
           userId: userData.id,
           items: cartItems,
-          totalAmount: cartItems.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-          ),
+          totalAmount: totalAmount, 
         }),
       });
 
@@ -72,6 +115,22 @@ const CartPage = () => {
         <p className="text-gray-400 text-center">Корзина пуста</p>
       ) : (
         <div className="space-y-6">
+      
+          <div className="flex flex-col sm:flex-row items-center bg-[#1E1E1E] border border-gray-700 rounded-lg p-4 shadow-lg w-full">
+            <input
+              type="text"
+              placeholder="Введите промокод"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              className="w-full p-2 border rounded bg-[#1E1E1E] text-white"
+            />
+            <button
+              onClick={handleApplyPromoCode}
+              className="bg-orange-500 text-white px-4 py-2 rounded-lg mt-2 sm:mt-0 sm:ml-2 hover:bg-orange-600"
+            >
+              Применить
+            </button>
+          </div>
           {cartItems.map((item) => (
             <div
               key={item.id}
@@ -131,8 +190,10 @@ const CartPage = () => {
               </button>
             </div>
           ))}
-
-          <div className="flex justify-end mt-8">
+          <div className="flex justify-between items-center mt-8">
+            <p className="text-xl font-bold text-gray-200">
+              Итого: {new Intl.NumberFormat("ru-RU").format(totalAmount)} ₽
+            </p>
             <button
               onClick={handleCheckout}
               className="bg-green-600 text-white px-6 py-2 rounded-lg text-lg hover:bg-green-500"

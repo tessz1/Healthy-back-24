@@ -22,7 +22,7 @@ function NavigationAdmin() {
             </Link>
           </li>
           <li className="rounded-xl p-2 bg-orange-400 text-white text-sm sm:text-base text-center hover:bg-orange-500 transition duration-300 sm:w-1/4">
-            <Link to="/promocodes" className="block w-full h-full">
+            <Link to="/createPromoCode" className="block w-full h-full">
               Промокоды
             </Link>
           </li>
