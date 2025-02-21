@@ -12,7 +12,9 @@ import Reviews from "./pages/Reviews";
 import Cart from "./pages/Cart.tsx";
 import NavigationAdmin from "./pages/admin/NavigationAdmin.tsx";
 import CreatePromoCode from "./pages/admin/CreatePromocode.tsx"
+
 import PurchasedCourses from "./pages/PurchasedCourses.tsx";
+
 function App() {
   return (
     <Router>
@@ -30,6 +32,7 @@ function App() {
         <Route path="/createPromoCode" element={<CreatePromoCode />} /> 
         <Route path="/course/:courseId" element={<CoursePage />} />
         <Route path="/payment-webhook" element={<div>Payment webhook</div>} />
+        <Route path="/createPromoCode" element={<CreatePromoCode />} />
       </Routes>
     </Router>
   );

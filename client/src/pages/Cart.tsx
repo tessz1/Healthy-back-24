@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
+=======
+import React, { useState, useEffect } from "react";
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/index";
 import { removeItem, updateQuantity, clearCart } from "../store/cartSlice";
@@ -7,18 +11,30 @@ const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   const [promoCode, setPromoCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(
     cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   );
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
     }
   }, []);
 
+<<<<<<< HEAD
+=======
+  // Обновление итоговой суммы при изменении количества товаров или скидки
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   useEffect(() => {
     const newTotalAmount = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -31,6 +47,7 @@ const CartPage = () => {
     dispatch(removeItem(id));
   };
 
+  // Изменение количества товара
   const handleQuantityChange = (id: string, newQuantity: number) => {
     if (newQuantity >= 1) {
       dispatch(updateQuantity({ id, quantity: newQuantity }));
@@ -46,15 +63,24 @@ const CartPage = () => {
         },
         body: JSON.stringify({
           code: promoCode,
+<<<<<<< HEAD
           orderTotal: totalAmount + discount, 
+=======
+          orderTotal: totalAmount + discount, // Итоговая сумма до применения скидки
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
+<<<<<<< HEAD
         setDiscount(data.discount);
         setTotalAmount(data.finalTotal);
+=======
+        setDiscount(data.discount); 
+        setTotalAmount(data.finalTotal); 
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
         alert("Промокод успешно применен!");
       } else {
         alert(data.message || "Не удалось применить промокод");
@@ -65,6 +91,10 @@ const CartPage = () => {
     }
   };
 
+<<<<<<< HEAD
+=======
+  // Оформление заказа
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   const handleCheckout = async () => {
     try {
       alert("Начало handleCheckout");
@@ -101,8 +131,13 @@ const CartPage = () => {
         },
         body: JSON.stringify({
           userId: userData.id,
+<<<<<<< HEAD
           courseId: courseId,
           amount: amount,
+=======
+          items: cartItems,
+          totalAmount: totalAmount, 
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
         }),
       });
   
@@ -141,6 +176,10 @@ const CartPage = () => {
         <p className="text-gray-400 text-center">Корзина пуста</p>
       ) : (
         <div className="space-y-6">
+<<<<<<< HEAD
+=======
+      
+>>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
           <div className="flex flex-col sm:flex-row items-center bg-[#1E1E1E] border border-gray-700 rounded-lg p-4 shadow-lg w-full">
             <input
               type="text"

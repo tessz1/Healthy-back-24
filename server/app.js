@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import promocodesRouter from "./routes/promocodesRouter.js";
+
 import chatRoutes from "./routes/chatRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import cors from "cors";
@@ -35,6 +36,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/promo", promocodesRouter);
+
 app.use("/api/user", userRouter);
 
 app.get("/api/course/:courseId", async (req, res) => {
@@ -117,6 +119,7 @@ app.post("/payment-webhook", async (req, res) => {
 app.get("/payment-success", (req, res) => {
   res.send("Оплата прошла успешно! Спасибо за покупку.");
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
