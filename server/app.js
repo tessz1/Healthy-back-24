@@ -23,7 +23,10 @@ app.use(express.json());
 app.use(cors({ origin: "*", methods: "GET,POST,PUT,DELETE" }));
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("MongoDB connected"))
   .catch((error) => console.log("MongoDB connection error:", error));
 
@@ -72,7 +75,8 @@ app.post("/create-payment", async (req, res) => {
         },
         confirmation: {
           type: "redirect",
-          return_url: "https://0f31-2607-740-22-5-9845-4aae-babc-38e3.ngrok-free.app/payment-webhook",
+          return_url:
+            "https://0f31-2607-740-22-5-9845-4aae-babc-38e3.ngrok-free.app/payment-webhook",
         },
         capture: true,
         description: `Оплата курса пользователем ${userId}`,
@@ -80,7 +84,8 @@ app.post("/create-payment", async (req, res) => {
           userId,
           courseId,
         },
-        notification_url: "https://0f31-2607-740-22-5-9845-4aae-babc-38e3.ngrok-free.app/payment-webhook",
+        notification_url:
+          "https://0f31-2607-740-22-5-9845-4aae-babc-38e3.ngrok-free.app/payment-webhook",
       },
       idempotenceKey
     );
@@ -118,7 +123,6 @@ app.post("/payment-webhook", async (req, res) => {
 app.get("/payment-success", (req, res) => {
   res.send("Оплата прошла успешно! Спасибо за покупку.");
 });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
