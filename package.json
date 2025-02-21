@@ -5,16 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "server": "node server/app.js ",
+    "server": "node server/app.js",
     "go": "concurrently \"npm run server\" \"npm run dev\"",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
+    "start": "npm run build && node server/app.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "set NODE_OPTIONS=--experimental-vm-modules && jest"
   },
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",
-    "@appigram/yookassa-node": "^1.1.10",
     "@babel/preset-typescript": "^7.26.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@telegram-apps/init-data-node": "^1.2.2",
@@ -35,6 +35,7 @@
     "react-modal": "^3.16.3",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.22.3",
+    "serve": "^14.2.4",
     "uuid": "^11.0.5",
     "yookassa": "^0.1.1"
   },

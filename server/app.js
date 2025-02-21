@@ -2,7 +2,6 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import promocodesRouter from "./routes/promocodesRouter.js";
-
 import chatRoutes from "./routes/chatRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import cors from "cors";

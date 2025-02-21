@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
-=======
-import React, { useState, useEffect } from "react";
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/index";
 import { removeItem, updateQuantity, clearCart } from "../store/cartSlice";
@@ -11,30 +7,18 @@ const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   const [promoCode, setPromoCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(
     cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   );
 
-<<<<<<< HEAD
-=======
-  
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
     }
   }, []);
 
-<<<<<<< HEAD
-=======
-  // Обновление итоговой суммы при изменении количества товаров или скидки
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   useEffect(() => {
     const newTotalAmount = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -63,24 +47,16 @@ const CartPage = () => {
         },
         body: JSON.stringify({
           code: promoCode,
-<<<<<<< HEAD
-          orderTotal: totalAmount + discount, 
-=======
-          orderTotal: totalAmount + discount, // Итоговая сумма до применения скидки
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
+
+          orderTotal: totalAmount + discount,
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-<<<<<<< HEAD
         setDiscount(data.discount);
         setTotalAmount(data.finalTotal);
-=======
-        setDiscount(data.discount); 
-        setTotalAmount(data.finalTotal); 
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
         alert("Промокод успешно применен!");
       } else {
         alert(data.message || "Не удалось применить промокод");
@@ -91,39 +67,36 @@ const CartPage = () => {
     }
   };
 
-<<<<<<< HEAD
-=======
-  // Оформление заказа
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
   const handleCheckout = async () => {
     try {
       alert("Начало handleCheckout");
-  
+
       if (!window.Telegram || !window.Telegram.WebApp) {
         throw new Error("Telegram WebApp не инициализирован");
       }
-  
+
       const userData = window.Telegram.WebApp.initDataUnsafe?.user;
       alert(`Данные пользователя: ${JSON.stringify(userData)}`);
-  
+
       if (!userData || !userData.id) {
         throw new Error("Данные пользователя не найдены");
       }
-  
-    
+
       if (cartItems.length === 0) {
         throw new Error("Корзина пуста");
       }
-  
+
       const courseId = cartItems[0].id;
       const amount = totalAmount;
-  
-      alert(`Отправляемые данные: ${JSON.stringify({
-        userId: userData.id,
-        courseId: courseId,
-        amount: amount,
-      })}`);
-  
+
+      alert(
+        `Отправляемые данные: ${JSON.stringify({
+          userId: userData.id,
+          courseId: courseId,
+          amount: amount,
+        })}`
+      );
+
       const response = await fetch("http://localhost:5000/create-payment", {
         method: "POST",
         headers: {
@@ -131,35 +104,32 @@ const CartPage = () => {
         },
         body: JSON.stringify({
           userId: userData.id,
-<<<<<<< HEAD
           courseId: courseId,
           amount: amount,
-=======
-          items: cartItems,
-          totalAmount: totalAmount, 
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
         }),
       });
-  
+
       alert(`Ответ сервера: ${JSON.stringify(response)}`);
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || "Ошибка при создании платежа");
       }
-  
+
       const result = await response.json();
       alert(`Результат от сервера: ${JSON.stringify(result)}`);
-  
+
       const { paymentUrl } = result;
       alert(`Ссылка на оплату: ${paymentUrl}`);
-  
+
       if (window.Telegram.WebApp.openLink) {
         alert("Открываем ссылку на оплату через Telegram WebApp");
         window.Telegram.WebApp.openLink(paymentUrl);
       } else {
-        alert("Метод openLink недоступен. Перенаправляем на платежную страницу.");
-        window.open(paymentUrl, "_blank"); 
+        alert(
+          "Метод openLink недоступен. Перенаправляем на платежную страницу."
+        );
+        window.open(paymentUrl, "_blank");
       }
     } catch (error) {
       // @ts-ignore
@@ -176,10 +146,6 @@ const CartPage = () => {
         <p className="text-gray-400 text-center">Корзина пуста</p>
       ) : (
         <div className="space-y-6">
-<<<<<<< HEAD
-=======
-      
->>>>>>> eecdbc16e740c71b2e735377f41a5437bfda256f
           <div className="flex flex-col sm:flex-row items-center bg-[#1E1E1E] border border-gray-700 rounded-lg p-4 shadow-lg w-full">
             <input
               type="text"
