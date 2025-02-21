@@ -7,6 +7,16 @@ declare global {
   }
 }
 
+interface ContentBlock {
+  type: string;
+  title: string;
+  description: string;
+  content: string;
+  order: number;
+
+}
+
+
 const UploadCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -16,14 +26,33 @@ const UploadCourse = () => {
   const [images, setImages] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
-  const [messageType, setMessageType] = useState<"success" | "error" | null>(
-    null
-  );
+  const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
+
+  const [contentBlocks, setContentBlocks] = useState([
+    { type: "", title: "", description: "", content: "", order: 1 },
+  ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImages(Array.from(e.target.files));
     }
+  };
+
+  const handleAddContentBlock = () => {
+    setContentBlocks([
+      ...contentBlocks,
+      { type: "", title: "", description: "", content: "", order: contentBlocks.length + 1 },
+    ]);
+  };
+
+  const handleContentChange = <K extends keyof ContentBlock>(
+    index: number,
+    field: K,
+    value: ContentBlock[K]
+  ) => {
+    const updatedBlocks = [...contentBlocks];
+    updatedBlocks[index][field] = value;
+    setContentBlocks(updatedBlocks);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,9 +66,10 @@ const UploadCourse = () => {
     formData.append("price", price);
     formData.append("duration", duration);
     formData.append("instructor", instructor);
+    formData.append("content", JSON.stringify(contentBlocks)); 
 
     if (images.length > 0) {
-      formData.append("image", images[0]); // Сохраняем только ОДИН файл
+      formData.append("image", images[0]); 
     }
 
     try {
@@ -68,6 +98,7 @@ const UploadCourse = () => {
         Добавить курс
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Основные поля курса */}
         <div>
           <input
             type="text"
@@ -125,11 +156,59 @@ const UploadCourse = () => {
             className="w-full px-4 py-2 bg-[#1E1E1E] text-gray-200 border border-gray-700 rounded"
           />
         </div>
+
+        {/* Блоки контента */}
+        <div className="space-y-4">
+          {contentBlocks.map((block, index) => (
+            <div key={index} className="bg-[#1E1E1E] p-4 rounded-lg">
+              <select
+                value={block.type}
+                onChange={(e) => handleContentChange(index, "type", e.target.value)}
+                className="w-full px-4 py-2 bg-[#2E2E2E] text-gray-200 border border-gray-700 rounded"
+              >
+                <option value="">Выберите тип</option>
+                <option value="video">Видео</option>
+                <option value="text">Текст</option>
+                <option value="quiz">Тест</option>
+                <option value="assignment">Задание</option>
+              </select>
+              <input
+                type="text"
+                placeholder="Название"
+                value={block.title}
+                onChange={(e) => handleContentChange(index, "title", e.target.value)}
+                className="w-full px-4 py-2 bg-[#2E2E2E] text-gray-200 border border-gray-700 rounded mt-2"
+              />
+              <textarea
+                placeholder="Описание"
+                value={block.description}
+                onChange={(e) => handleContentChange(index, "description", e.target.value)}
+                className="w-full px-4 py-2 bg-[#2E2E2E] text-gray-200 border border-gray-700 rounded mt-2"
+              />
+              <input
+                type="text"
+                placeholder="Ссылка или текст"
+                value={block.content}
+                onChange={(e) => handleContentChange(index, "content", e.target.value)}
+                className="w-full px-4 py-2 bg-[#2E2E2E] text-gray-200 border border-gray-700 rounded mt-2"
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={handleAddContentBlock}
+          className="w-full py-2 px-4 bg-orange-500 text-white rounded hover:bg-orange-400 transition-all"
+        >
+          Добавить блок контента
+        </button>
+
         <div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-orange-500 text-white rounded hover:bg-orange-400 transition-all disabled:opacity-50"
+            className="w-full py-2 px-4 bg-green-500 text-white rounded hover:bg-green-400 transition-all disabled:opacity-50"
           >
             {loading ? "Загружается..." : "Загрузить курс"}
           </button>

@@ -4,10 +4,12 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-
+  "include": ["src/**/*", "yookassa.d.ts"],
   "compilerOptions": {
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "noImplicitAny": false,
+    "allowJs": true
   }
 }

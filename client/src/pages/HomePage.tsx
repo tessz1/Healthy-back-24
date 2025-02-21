@@ -4,7 +4,7 @@ import { FaUser, FaBox } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
 import StartPages from "../components/StartPages";
-
+import axios from "axios";
 const tg = window.Telegram?.WebApp;
 
 interface ProfileData {
@@ -33,6 +33,13 @@ function HomePage() {
         ...prev,
         fullName: userData.first_name || "Гость",
       }));
+      axios
+      .post("http://localhost:5000/api/user", {
+        telegramId: userData.id,
+        fullName: userData.first_name,
+      })
+      .then((response) => console.log("Пользователь сохранен:", response.data))
+      .catch((error) => console.error("Ошибка регистрации пользователя:", error));
     }
   }, [userData]);
 

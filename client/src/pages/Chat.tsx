@@ -1,11 +1,34 @@
 import { useEffect, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
+
+
+const tg = window.Telegram?.WebApp;
+
 const Chat = () => {
+  const [profileData, setProfileData] = useState<ProfileData>({
+    fullName: "Гость",
+  })
+  
   const [messages, setMessages] = useState([
     { sender: "bot", text: "Привет! Как я могу помочь?" }
   ]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState<string>("");
+
+  const userData = tg?.initDataUnsafe?.user
+  
+
+  useEffect(() => {
+    if(userData) {
+      setProfileData((prev) => ({
+       ...prev,
+        fullName: userData.first_name || "Гость",
+      }));
+    }
+  }, [userData])
+
+
+
 
   const sendMessage = () => {
     if (!input.trim()) return;
