@@ -9,7 +9,7 @@ export const createContent = async (req, res) => {
     if (!courseExists) {
       return res.status(404).json({ error: "Курс не найден" });
     }
-
+// create
     const newContent = new CourseContent({
       courseId,
       type,
