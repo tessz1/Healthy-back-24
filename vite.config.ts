@@ -7,6 +7,7 @@ export default defineConfig({
     minify: false, // Выключает минификацию (можно включить обратно после теста)
     sourcemap: false, // Отключает source maps
     chunkSizeWarningLimit: 2000,
+    outDir: 'client/dist',
   },
   server: {
     // Разрешенные хосты для разработки
