@@ -16,7 +16,7 @@ interface ContentBlock {
 
 }
 
-
+const API_URL = import.meta.env.VITE_API_URL
 const UploadCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -74,7 +74,7 @@ const UploadCourse = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/courses",
+      `${API_URL}/api/courses`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
