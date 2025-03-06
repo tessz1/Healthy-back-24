@@ -15,6 +15,7 @@ interface ContentBlock {
   order: number;
 
 }
+
 const API_URL = import.meta.env.VITE_API_URL;
 console.log("API_URL:", API_URL);
 const UploadCourse = () => {
@@ -169,8 +170,6 @@ const UploadCourse = () => {
                 <option value="">Выберите тип</option>
                 <option value="video">Видео</option>
                 <option value="text">Текст</option>
-                <option value="quiz">Тест</option>
-                <option value="assignment">Задание</option>
               </select>
               <input
                 type="text"

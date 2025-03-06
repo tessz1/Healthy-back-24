@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const mongoURI =
   process.env.MONGO_URI || "mongodb://localhost:27017/telegram-mini-apps";
@@ -6,7 +6,7 @@ const mongoURI =
 const connectDB = async () => {
   try {
     await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
+      // useNewUrlParser: true,
       useUnifiedTopology: true,
       // useCreateIndex: true,a
       // useFindAndModify: false

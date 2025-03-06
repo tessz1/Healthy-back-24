@@ -11,12 +11,12 @@ import { addCourseToUser } from "./controllers/userController.js";
 import { YooCheckout } from "@a2seven/yoo-checkout";
 import { v4 as uuidv4 } from "uuid";
 
+dotenv.config();
+
 const checkout = new YooCheckout({
   shopId: process.env.YOOKASSA_SHOP_ID,
   secretKey: process.env.YOOKASSA_SECRET_KEY,
 });
-
-dotenv.config();
 
 const app = express();
 app.use(express.json());

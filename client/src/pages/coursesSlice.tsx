@@ -29,7 +29,7 @@ export const fetchCourses = createAsyncThunk<Course[]>(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get<Course[]>(
-        "http://localhost:5000/api/courses"
+        `${import.meta.env.VITE_API_URL}/api/courses`
       );
       return response.data;
     } catch (error: any) {

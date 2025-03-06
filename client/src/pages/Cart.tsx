@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/index";
-import { removeItem, updateQuantity, clearCart } from "../store/cartSlice";
+import { removeItem, updateQuantity,  } from "../store/cartSlice";
 
 const CartPage = () => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
@@ -40,7 +40,7 @@ const CartPage = () => {
 
   const handleApplyPromoCode = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/promo/apply", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/promo/apply`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ const CartPage = () => {
         })}`
       );
 
-      const response = await fetch("http://localhost:5000/create-payment", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/create-payment`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const CartPage = () => {
               <div className="w-full sm:w-24 h-24 overflow-hidden rounded-md mb-4 sm:mb-0">
                 {item.images ? (
                   <img
-                    src={`http://localhost:5000${item.images}`}
+                    src={`${import.meta.env.VITE_API_URL}${item.images}`}
                     alt={item.title}
                     className="w-full h-full object-cover"
                   />

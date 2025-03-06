@@ -1,18 +1,14 @@
 import HomePage from "./pages/HomePage.js";
-// import Orders from "./pages/Orders.tsx";
 import Shop from "./pages/ShopPage.js";
 import CoursePage from "./pages/coursesPage/CoursePage.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import ProductDetail from "./pages/ProductDetail.tsx";
 import Chat from "./pages/Chat.js";
 import UploadCourse from "./pages/admin/UploadCourse.js";
-import Basket from "./pages/Basket.tsx";
 import Header from "./components/Header.tsx";
 import Reviews from "./pages/Reviews";
 import Cart from "./pages/Cart.tsx";
 import NavigationAdmin from "./pages/admin/NavigationAdmin.tsx";
 import CreatePromoCode from "./pages/admin/CreatePromocode.tsx"
-
 import PurchasedCourses from "./pages/PurchasedCourses.tsx";
 
 function App() {
@@ -25,14 +21,14 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/uploadCourse" element={<UploadCourse />} />
-        <Route path="/basket" element={<Basket />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="cart" element={<Cart />} />
         <Route path="/admin" element={<NavigationAdmin/>} />
         <Route path="/createPromoCode" element={<CreatePromoCode />} /> 
-        <Route path="/course/:courseId" element={<CoursePage />} />
-        <Route path="/payment-webhook" element={<div>Payment webhook</div>} />
+        {/* <Route path="/course/:courseId" element={<CoursePage />} /> */}
+        {/* <Route path="/payment-webhook" element={<div>Payment webhook</div>} /> */}
         <Route path="/createPromoCode" element={<CreatePromoCode />} />
+        <Route path="/CoursePage" element={<CoursePage/>}></Route>
       </Routes>
     </Router>
   );

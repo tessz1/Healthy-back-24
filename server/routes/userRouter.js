@@ -3,16 +3,15 @@ import { getPurchasedCourses } from "../controllers/userController.js";
 import User from "../models/userModel.js";
 const router = express.Router();
 
-
 router.post("/", async (req, res) => {
   try {
     const { telegramId, purchases, role } = req.body;
 
     const existingUser = await User.findOne({ telegramId });
     if (existingUser) {
-      return res.status(400).json({ message: "Пользователь уже существует" });
+      return res.status(409).json({ message: "Пользователь уже существует" });
     }
-    
+
     const newUser = new User({
       telegramId,
       purchases: purchases || [],

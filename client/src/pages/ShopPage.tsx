@@ -29,7 +29,7 @@ const ProductCatalog = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/courses");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses`);
         setCourses(response.data);
       } catch (err) {
         setError("Ошибка при загрузке данных");
@@ -95,7 +95,7 @@ const ProductCatalog = () => {
               <div className="overflow-hidden h-48 mb-4">
                 {course.images ? (
                   <img
-                    src={`http://localhost:5000${course.images}`}
+                    src={`${import.meta.env.VITE_API_URL}${course.images}`}
                     alt={course.title}
                     className="w-full h-full object-cover"
                   />

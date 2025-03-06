@@ -34,7 +34,7 @@ function HomePage() {
         fullName: userData.first_name || "Гость",
       }));
       axios
-      .post("http://localhost:5000/api/user", {
+      .post(`${import.meta.env.VITE_API_URL}/api/user`, {
         telegramId: userData.id,
         fullName: userData.first_name,
       })

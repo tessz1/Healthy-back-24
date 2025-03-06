@@ -1,34 +1,31 @@
 import { useEffect, useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
 
-
-
 const tg = window.Telegram?.WebApp;
 
 const Chat = () => {
   const [profileData, setProfileData] = useState<ProfileData>({
     fullName: "Гость",
-  })
-  
+  });
+
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Привет! Как я могу помочь?" }
+    {
+      sender: "bot",
+      text: "Привет! Я только учусь и пока не всегда могу ответить на все твои вопросы, но я стараюсь становиться лучше с каждым днем. Скоро я буду готов помочь тебе с чем угодно!",
+    },
   ]);
   const [input, setInput] = useState<string>("");
 
-  const userData = tg?.initDataUnsafe?.user
-  
+  const userData = tg?.initDataUnsafe?.user;
 
   useEffect(() => {
-    if(userData) {
+    if (userData) {
       setProfileData((prev) => ({
-       ...prev,
+        ...prev,
         fullName: userData.first_name || "Гость",
       }));
     }
-  }, [userData])
-
-
-
+  }, [userData]);
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -37,7 +34,10 @@ const Chat = () => {
     setInput("");
 
     setTimeout(() => {
-      const botResponse = { sender: "bot", text: "Это автоответчик. Я пока учусь." };
+      const botResponse = {
+        sender: "bot",
+        text: "Это автоответчик. Я пока учусь.",
+      };
       setMessages((prev) => [...prev, botResponse]);
     }, 1000);
   };
@@ -49,7 +49,9 @@ const Chat = () => {
           <div
             key={index}
             className={`p-2 my-2 rounded-lg max-w-xs ${
-              msg.sender === "user" ? "bg-orange-500 ml-auto" : "bg-[#1E1E1E] mr-auto"
+              msg.sender === "user"
+                ? "bg-orange-500 ml-auto"
+                : "bg-[#1E1E1E] mr-auto"
             }`}
           >
             {msg.text}
@@ -68,7 +70,7 @@ const Chat = () => {
           className="ml-2 p-2 bg-orange-500 text-white rounded-lg hover:bg-orange-400"
           onClick={sendMessage}
         >
-          <FaPaperPlane />
+          <FaPaperPlane className="w-12"/>
         </button>
       </div>
     </div>

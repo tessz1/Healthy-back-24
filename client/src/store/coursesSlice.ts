@@ -26,7 +26,7 @@ const initialState: CoursesState = {
 
 export const fetchCourses = createAsyncThunk("courses/fetchCourses", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get<Course[]>("http://localhost:5000/api/courses");
+    const response = await axios.get<Course[]>(`${import.meta.env.VITE_API_URL}/api/courses`);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Ошибка при загрузке курсов");
