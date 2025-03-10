@@ -75,7 +75,7 @@ const UploadCourse = () => {
 
     try {
       const response = await axios.post(
-      `${API_URL}/api/courses`,
+      `${import.meta.env.VITE_API_URL}/api/courses`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
