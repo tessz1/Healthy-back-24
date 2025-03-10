@@ -43,7 +43,7 @@ const CartPage = () => {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/promo/apply`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json",  
         },
         body: JSON.stringify({
           code: promoCode,

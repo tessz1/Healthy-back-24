@@ -19,7 +19,7 @@ const checkout = new YooCheckout({
 });
 
 const app = express();
-app.use(express.json());
+app.use(express.json());  
 app.use(cors({ origin: "*", methods: "GET,POST,PUT,DELETE" }));
 
 mongoose
