@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CreatePromoCode: React.FC = () => {
   const [discountType, setDiscountType] = useState<string>("percentage");
@@ -11,7 +12,7 @@ const CreatePromoCode: React.FC = () => {
   const handleSubmit = async (e :React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/promo/generate`, {
+      const response = await axios.post(`${API_URL}/api/promo/generate`, {
         discountType,
         discountValue,
         validUntil,

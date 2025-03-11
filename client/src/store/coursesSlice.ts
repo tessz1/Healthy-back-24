@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface Course {
   _id: string;
   title: string;
@@ -26,7 +28,7 @@ const initialState: CoursesState = {
 
 export const fetchCourses = createAsyncThunk("courses/fetchCourses", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get<Course[]>(`${import.meta.env.VITE_API_URL}/api/courses`);
+    const response = await axios.get<Course[]>(`${API_URL}/api/courses`);
     return response.data;
   } catch (error: any) {
     return rejectWithValue(error.response?.data?.message || "Ошибка при загрузке курсов");

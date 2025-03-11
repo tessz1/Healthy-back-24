@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import StartPages from "../components/StartPages";
 import axios from "axios";
 const tg = window.Telegram?.WebApp;
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface ProfileData {
   fullName: string;
@@ -34,7 +35,7 @@ function HomePage() {
         fullName: userData.first_name || "Гость",
       }));
       axios
-      .post(`${import.meta.env.VITE_API_URL}/api/user`, {
+      .post(`${API_URL}/api/user`, {
         telegramId: userData.id,
         fullName: userData.first_name,
       })

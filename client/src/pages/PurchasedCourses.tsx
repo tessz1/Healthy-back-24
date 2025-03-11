@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import EmptyOrders from "./Orders";
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface Course {
   _id: string;
@@ -18,7 +19,7 @@ const PurchasedCourses = () => {
     const fetchPurchasedCourses = async () => {
       try {
         const userData = window.Telegram.WebApp.initDataUnsafe.user;
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user/${userData.id}/purchases`);
+        const response = await axios.get(`${API_URL}/api/user/${userData.id}/purchases`);
         setCourses(response.data);
       } catch (error) {
         console.error("Ошибка при получении курсов:", error);
@@ -45,7 +46,7 @@ const PurchasedCourses = () => {
         {courses.map((course) => (
           <div key={course._id} className="bg-[#1e1e1e] p-4 rounded-lg shadow-lg">
             <img
-              src={`${import.meta.env.VITE_API_URL}${course.images}`}
+              src={`${API_URL}${course.images}`}
               alt={course.title}
               className="w-full h-48 object-cover rounded-md mb-4"
             />

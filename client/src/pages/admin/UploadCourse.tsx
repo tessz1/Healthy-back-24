@@ -13,11 +13,11 @@ interface ContentBlock {
   description: string;
   content: string;
   order: number;
-
 }
 
 const API_URL = import.meta.env.VITE_API_URL;
 console.log("API_URL:", API_URL);
+
 const UploadCourse = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -75,7 +75,7 @@ const UploadCourse = () => {
 
     try {
       const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/courses`,
+      `${API_URL}/api/courses`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -170,6 +170,8 @@ const UploadCourse = () => {
                 <option value="">Выберите тип</option>
                 <option value="video">Видео</option>
                 <option value="text">Текст</option>
+                <option value="quiz">Тест</option>
+                <option value="assignment">Задание</option>
               </select>
               <input
                 type="text"

@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../store/cartSlice";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 declare global {
   interface Window {
     Telegram: any;
@@ -29,7 +31,7 @@ const ProductCatalog = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/courses`);
+        const response = await axios.get(`${API_URL}/api/courses`);
         setCourses(response.data);
       } catch (err) {
         setError("Ошибка при загрузке данных");
@@ -79,7 +81,6 @@ const ProductCatalog = () => {
   if (error) {
     return <div className="text-red-500 text-center mt-10">{error}</div>;
   }
-
   return (
     <div>
       <div className="w-full min-h-screen bg-[#121212] px-4 py-8">
@@ -95,7 +96,10 @@ const ProductCatalog = () => {
               <div className="overflow-hidden h-48 mb-4">
                 {course.images ? (
                   <img
-                    src={`${import.meta.env.VITE_API_URL}${course.images}`}
+                    src={`${API_URL}/uploads/${course.images.replace(
+                      "/uploads/",
+                      ""
+                    )}`}
                     alt={course.title}
                     className="w-full h-full object-cover"
                   />
